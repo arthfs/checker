@@ -1,114 +1,234 @@
+'use client'
+import Piece from "./piece";
+import King from "./king";
+import { detect_captures, move, possibilities, remaining_pieces, reset } from "./functions";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Merienda } from 'next/font/google'
+import { userefcontext } from "./context";
+import SimpleDialogDemo from "./dialog";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const merienda = Merienda({subsets:['latin']})
+
+var message = ''
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+const {setOpen, player,setplayer,board,setboard,start,setstart,reset,movesound,setmovesound,capturesound,lastwinner,setlastwinner} = userefcontext()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+var ref = board
+const [pos,setpos] = useState(['',[]])
+const [seconds,setseconds]= useState(10)
+const updateseconds = ()=>{
+  setseconds(seconds-1)
+}
+
+
+useEffect(() => {
+ if (!start) return;
+  const intervalId = setInterval(() => {
+    
+      if (seconds > 0) 
+      {
+        return updateseconds();
+      } 
+
+      else 
+      {
+        setplayer(player === '1' ? '2' : '1'); // Functional update
+        setseconds(10) // Reset seconds to 10
+      }
+   
+  }, 1000);
+
+  return () => clearInterval(intervalId);
+}, [player,seconds,start])
+
+
+const [score,setscore] = useState({'player1':0,'player2':0})
+
+const updatescore = (newscore)=>{
+  setscore( (oldscore)=>{
+    var temp_score = {...oldscore}
+    if (newscore [0]>0 && newscore [2] == 0)
+      {
+        temp_score['player1']+=1
+      }
+      
+    else if (newscore [0]==0 && newscore [2] >0)
+    {
+      temp_score['player2']+=1
+    }
+
+    return temp_score
+  })
+}
+const change_pos =(newpos)=>{ setpos(newpos) }
+
+  return (
+    <div> 
+      <SimpleDialogDemo info= {message}></SimpleDialogDemo>   
+ 
+    <div className="infos">
+       <div className="player">
+          <Image className="avatar" src={"/player1.jpg"} height={50} width={50} style={{borderColor: player == '1' ? 'yellow':'transparent',borderWidth:'5px'}} alt={"player1"}/>  
+          <div id="er" className={merienda.className}>player 1</div>
+       </div>
+      
+      <div className={merienda.className} style={{alignItems: 'center',fontSize:'25px'}}>{score['player1']}:{score['player2']}</div>
+       <div className="player">
+          <Image className="avatar" src={"/player2.jpg"} height={50} width={50} style={{borderColor: player == '2'? 'yellow' :'transparent',borderWidth:'5px'}} alt={"player1"}/>  
+          <div className={merienda.className}>player 2</div>
+       </div>
+   </div>
+
+   <div className="main">
+
+   { start && <div className={merienda.className} style={{width:"100%",alignItems:'center',display:'flex',flexDirection:'row',justifyContent: player == '1' ? 'flex-start':'end',marginLeft:player == '1'? "20px":0, marginRight:player == '2'? "20px":0}}> <span className={merienda.className} style={{marginRight:'2px', fontSize:'30px',fontWeight:'bold', color:seconds>4 ? 'black':'red'}}> {seconds}</span> seconds left</div>}
+   { !start && <button className={merienda.className} onClick={()=>{//change_pos(possibilities(ref,'1 3'))
+     
+   setstart(true)
+
+      
+    }}>Start game</button>
+  }
+      <div className="grid">
+     { 
+      [1,2,3,4,5,6,7,8].map((i)=>{
+        var temp = []
+        var back_color = 'black'
+         if (i%2==0) back_color = back_color =='white' ? 'black':'white'
+        
+        for (let a = 0; a<8 ;a++)
+        {
+          if (ref[i-1][a]!='*')
+          {  
+            if (ref[i-1][a][0]!='k' ) temp.push(<div  onClick={()=>{ 
+             //check if the game has startet yet
+              var ii = document.getElementById('p0 2')
+
+             //if (start)
+              {//if it is your turn
+              if (ref[i-1][a] == player)  change_pos(possibilities(ref,`${i-1} ${a}`))
+              else alert('It is not turn yet')
+              }
+
+           // else alert ('Start the game first')
+            // console.log(start)
+            }} key={`c${i} ${a}`} className="cell" style={{backgroundColor:pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <Piece id={`p${i-1} ${a}`}  color={ref[i-1][a] =='1' ? 'red':'white'}></Piece>  </div>)
+
+            else temp.push(<div onClick={()=>{ 
+              if (start)
+              {
+              if (ref[i-1][a][1] == player)   change_pos(possibilities(ref,`${i-1} ${a}`))
+              else alert('It is not turn yet')
+              }
+
+              else alert ('Start the game first')
+            }} key={a} className="cell" style={{backgroundColor: pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <King color={ref[i-1][a][1] =='1' ? 'red':'white'}></King>  </div>)
+           
+           }
+
+           else 
+           {
+            temp.push(<div onClick={()=>
+              {
+              change_pos(['',[]])
+              if (pos[1].includes(`${i-1} ${a}`))
+              { 
+                var did_captures = detect_captures(ref,pos[0]).length>0
+                move(pos[0],`${i-1} ${a}`,ref,movesound,capturesound).then((status)=>{
+                //console.log(typeof(status))
+                if (typeof(status) == 'string') 
+                {
+                  setOpen(true)
+                  message = status
+                }
+
+                else 
+                {
+                  var new_captures = detect_captures(ref,`${i-1} ${a}`)
+
+                  if ( new_captures.length>0 && did_captures ) 
+                    {
+                      var new_possibilities = possibilities(ref,`${i-1} ${a}`)
+                      change_pos(new_possibilities)
+                    }
+
+                  else
+                  { var tempref= [...ref]
+                    
+                    if (ref[i-1] [a].length !=2 && ((i-1 == 0 && ref[i-1][a]=='1') || (i-1 == 7 && ref[i-1][a]=='2') ))
+                      {
+                        ref[i-1] [a] = 'k'+ref[i-1][a]
+                        
+                      }
+                      setplayer( player == '1' ? '2' :'1' )
+                      var result = remaining_pieces(ref)
+                      
+                      if (result [2] == '0' || result[0] == '0')
+                      {
+                        var winner = result[2] != '0'? '2': '1'
+                        message = `player ${winner} won`
+                       // currentplayer = '1'
+                    
+                        updatescore(result)
+               
+                        setOpen(true)
+                        setTimeout(() => 
+                        {
+
+                          setlastwinner(winner)
+                          setOpen(false)
+                          reset()
+                          
+                        }, 2000);
+                       
+                      }
+                       
+                      else if (result== '1 1') 
+                        { 
+                         message = 'draw'
+                         setOpen(true)
+                          setTimeout(() => 
+                            {
+                             setOpen(false)
+                             reset()
+                            }, 2000);
+                        }
+                      
+                      else 
+                      { 
+                        setseconds(10)    
+                      }
+                  
+                   }
+                }
+                 
+                })
+
+                
+              }
+           
+            }
+            } key={`c${i} ${a}`} className="cell" style={{backgroundColor: pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}>  </div>)
+
+           }
+          back_color = back_color =='white' ? 'black':'white'
+        }
+      
+      return <div key={`row ${i}`} className="row"> {temp}  </div>
+      })
+     }
+      
+    </div>
+    
+    
+    </div>
     </div>
   );
 }
+
+
+
+

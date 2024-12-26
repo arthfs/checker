@@ -2,20 +2,177 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.main{
+
+
+
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
+ align-items: center;
+
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.grid{
+  border: 5px;
+  border-style: double;
+  border-color: red;
+  align-items: center;
+}
+
+body
+{
+  background-color: rgb(220, 218, 218);
+}
+
+.cell
+{
+  width: 74px;
+  height: 70px;
+  border: 2px;
+  border-color: red;
+  border-style: solid;
+
+}
+.score
+{
+font-size: 35px;
+}
+
+.row
+{
+  display: flex;
+  flex-direction: row;
+}
+
+.test
+{
+
+  height: 70px;
+  display: flex;
+  width: 70px;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner{
+  position: absolute;
+  background-color: transparent;
+  border-Width:4.5px;
+ 
+}
+
+.star{
+  position: absolute;
+  font-size: 50px;
+  padding-top: 10px;
+
+
+}
+
+.infos
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 20px 0px 20px;
+}
+
+.player
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.avatar{
+  border-radius: 35px;
+  height: 70px;
+  width:70px;
+  margin-right:5px;
+}
+
+.winner{
+  position: absolute;
+  align-items: center;
+
+  width:100%;
+  align-content: center;
+  justify-content: center;
+  margin-top: 80px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  
+}
+
+
+
+
+.main2{
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+.container2 {
+  width: 60%; /* Ensures it spans the full viewport width */
+ display: flex;
+ flex-direction: column;
+ column-gap: 25px;
+
+}
+
+.title
+{ display: flex;
+  font-size: 30px;
+  font-weight: bold;
+  justify-content: center;
+  font-style: oblique;
+}
+
+.bullets{
+  font-weight: bold;
+}
+
+.indent 
+{
+  margin: 20px;
+}
+
+.footer{
+  position: absolute;
+  background-color: black;
+  height: 40px;
+  color:white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/*
+#er{
+  animation: rotateInfinite 5000ms ease-in-out infinite ;
+ position :absolute
+}
+
+@keyframes rotateInfinite {
+  0% {
+    transform: rotateZ(-30deg) translateX(-30vh);
+  }
+
+  50% {
+    transform: rotateY(180deg) rotateZ(30deg) translateX(-60vh);
+  }
+
+  100% {
+    transform: rotateZ(-30deg) translateX(120vh);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+*/
