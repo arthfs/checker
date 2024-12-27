@@ -19,6 +19,12 @@ const {setOpen, player,setplayer,board,setboard,start,setstart,reset,movesound,s
 var ref = board
 const [pos,setpos] = useState(['',[]])
 const [seconds,setseconds]= useState(10)
+const [elapsed,setelapsed]=useState(0)
+
+useEffect(()=>{
+  //console.log(elapsed)
+},[elapsed])
+
 const updateseconds = ()=>{
   setseconds(seconds-1)
 }
@@ -46,6 +52,38 @@ useEffect(() => {
 
 
 const [score,setscore] = useState({'player1':0,'player2':0})
+const [remaining,setremaining] = useState(remaining_pieces(board))
+
+
+
+
+useEffect(() => {
+  if (start)
+  {
+    const interval2 = setInterval(() => {
+   
+      setelapsed((old)=>{
+    
+       if (old+1 == 10 && remaining.split(" ")[0] == remaining.split(" ")[1]) 
+        { message = 'Draw'
+          clearInterval(interval2)
+          setOpen(true)
+          setTimeout(() => {
+            setelapsed(0)
+            setOpen(false)
+            reset()
+          }, 3000);
+          
+        }
+        return old+1
+      });
+    }, 1000);
+    return () => clearInterval(interval2); // Cleanup on unmount
+  }
+  
+
+  
+}, [start,remaining]);
 
 const updatescore = (newscore)=>{
   setscore( (oldscore)=>{
@@ -165,6 +203,13 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                       }
                       setplayer( player == '1' ? '2' :'1' )
                       var result = remaining_pieces(ref)
+                      if (result.split()[0] !=result.split(" ")[1]) 
+                        { 
+                          setelapsed(0)
+                          
+                        }
+                        //console.log(result)
+                      setremaining(result)
                       
                       if (result [2] == '0' || result[0] == '0')
                       {
@@ -185,7 +230,7 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                         }, 2000);
                        
                       }
-                       
+                       /*
                       else if (result== '1 1') 
                         { 
                          message = 'draw'
@@ -195,7 +240,7 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                              setOpen(false)
                              reset()
                             }, 2000);
-                        }
+                        }*/
                       
                       else 
                       { 
