@@ -13,9 +13,11 @@ import { userefcontext } from './context';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Backdrop from '@mui/material/Backdrop';
+import { ArrowDropDown } from '@mui/icons-material';
+import SimpleDialogDemo from './profiledialog';
 
 export default function MenuListComposition() {
-  const {reset,setboard,movesound,setmovesound,capturesound,setcapturesound,backgroundsound,setbackgroundsound} = userefcontext()
+  const {reset,setboard,movesound,setmovesound,capturesound,setcapturesound,backgroundsound,setbackgroundsound,handleclick} = userefcontext()
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -92,6 +94,11 @@ export default function MenuListComposition() {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem onClick={handleClose}> <Link href='/'> Home </Link> </MenuItem>
+                    <MenuItem > 
+                    
+                    <SimpleDialogDemo close={ ()=>handleClose(event)} ></SimpleDialogDemo> 
+                    </MenuItem>
+                    
                     <MenuItem onClick={ (event)=> { 
                      handleClose(event)  
                      reset()

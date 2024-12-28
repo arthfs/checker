@@ -176,3 +176,42 @@ font-size: 35px;
 }
 
 */
+
+
+
+.er {
+
+  
+  font-size: 60px;
+  
+}
+
+
+.avatar:hover{
+ 
+  scale: 2.3;
+}
+
+.label{
+  margin:10px;
+}
+
+.dialogtitle{
+
+  
+  display: flex;
+
+  justify-content: center;
+
+}
+
+.formfield{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width:400px;
+
+}
+.input{
+ margin: 5px; 
+}

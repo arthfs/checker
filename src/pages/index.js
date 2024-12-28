@@ -2,7 +2,7 @@
 import Piece from "./piece";
 import King from "./king";
 import { detect_captures, move, possibilities, remaining_pieces, reset } from "./functions";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { Merienda } from 'next/font/google'
@@ -14,7 +14,7 @@ const merienda = Merienda({subsets:['latin']})
 var message = ''
 
 export default function Home() {
-const {setOpen, player,setplayer,board,setboard,start,setstart,reset,movesound,setmovesound,capturesound,lastwinner,setlastwinner} = userefcontext()
+const {setOpen, player,setplayer,board,setboard,start,setstart,reset,movesound,setmovesound,capturesound,lastwinner,setlastwinner,selectedimage,handleclick,fileInputref, handlechange} = userefcontext()
 
 var ref = board
 const [pos,setpos] = useState(['',[]])
@@ -103,25 +103,38 @@ const updatescore = (newscore)=>{
 }
 const change_pos =(newpos)=>{ setpos(newpos) }
 
+
+
+
   return (
     <div> 
+      
       <SimpleDialogDemo info= {message}></SimpleDialogDemo>   
  
     <div className="infos">
        <div className="player">
-          <Image className="avatar" src={"/player1.jpg"} height={50} width={50} style={{borderColor: player == '1' ? 'yellow':'transparent',borderWidth:'5px'}} alt={"player1"}/>  
+          <Image className="avatar" src={
+           // "C://Users//arthu//Downloads//4997192894574079442.jpg"
+        player == '1'?  selectedimage || "/player1.jpg" : "/player1.jpg" }
+             height={50} width={50} style={{borderColor: player == '1' ? 'yellow':'transparent',borderWidth:'5px'}} alt={"player1"}/>  
           <div id="er" className={merienda.className}>player 1</div>
        </div>
       
       <div className={merienda.className} style={{alignItems: 'center',fontSize:'25px'}}>{score['player1']}:{score['player2']}</div>
        <div className="player">
-          <Image className="avatar" src={"/player2.jpg"} height={50} width={50} style={{borderColor: player == '2'? 'yellow' :'transparent',borderWidth:'5px'}} alt={"player1"}/>  
+          <Image className="avatar"  src={player == '2'?  selectedimage || "/player2.jpg" : "/player2.jpg"} height={50} width={50} style={{borderColor: player == '2'? 'yellow' :'transparent',borderWidth:'5px'}} alt={"player1"}/>  
           <div className={merienda.className}>player 2</div>
        </div>
    </div>
 
    <div className="main">
-
+  
+   <div className={'er'}
+   onClick={()=>{
+    handleclick()
+   }}
+   >er</div>
+ <input type="file" accept="image/*" style={{visibility:'hidden'}} ref={fileInputref} onChange={handlechange}></input>
    { start && <div className={merienda.className} style={{width:"100%",alignItems:'center',display:'flex',flexDirection:'row',justifyContent: player == '1' ? 'flex-start':'end',marginLeft:player == '1'? "20px":0, marginRight:player == '2'? "20px":0}}> <span className={merienda.className} style={{marginRight:'2px', fontSize:'30px',fontWeight:'bold', color:seconds>4 ? 'black':'red'}}> {seconds}</span> seconds left</div>}
    { !start && <button className={merienda.className} onClick={()=>{//change_pos(possibilities(ref,'1 3'))
      
