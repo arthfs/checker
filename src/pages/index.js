@@ -30,10 +30,10 @@ const updateseconds = ()=>{
 }
 
 
-useEffect(() => {
+useEffect(() => {  
  if (!start) return;
-  const intervalId = setInterval(() => {
-    
+  const intervalId = setInterval(() => { 
+   
       if (seconds > 0) 
       {
         return updateseconds();
@@ -59,12 +59,12 @@ const [remaining,setremaining] = useState(remaining_pieces(board))
 
 useEffect(() => {
   if (start)
-  {
+  { 
     const interval2 = setInterval(() => {
    
       setelapsed((old)=>{
     
-       if (old+1 == 10 && remaining.split(" ")[0] == remaining.split(" ")[1]) 
+       if (old+1 == 180 && remaining.split(" ")[0] == remaining.split(" ")[1]) 
         { message = 'Draw'
           clearInterval(interval2)
           setOpen(true)
@@ -103,9 +103,6 @@ const updatescore = (newscore)=>{
 }
 const change_pos =(newpos)=>{ setpos(newpos) }
 
-
-
-
   return (
     <div> 
       
@@ -126,23 +123,32 @@ const change_pos =(newpos)=>{ setpos(newpos) }
           <div className={merienda.className}>player 2</div>
        </div>
    </div>
-
+            
    <div className="main">
-  
-   <div className={'er'}
-   onClick={()=>{
-    handleclick()
-   }}
-   >er</div>
  <input type="file" accept="image/*" style={{visibility:'hidden'}} ref={fileInputref} onChange={handlechange}></input>
    { start && <div className={merienda.className} style={{width:"100%",alignItems:'center',display:'flex',flexDirection:'row',justifyContent: player == '1' ? 'flex-start':'end',marginLeft:player == '1'? "20px":0, marginRight:player == '2'? "20px":0}}> <span className={merienda.className} style={{marginRight:'2px', fontSize:'30px',fontWeight:'bold', color:seconds>4 ? 'black':'red'}}> {seconds}</span> seconds left</div>}
    { !start && <button className={merienda.className} onClick={()=>{//change_pos(possibilities(ref,'1 3'))
      
    setstart(true)
-
+   setseconds(10)
       
     }}>Start game</button>
   }
+  {start && <button onClick={()=>{
+   
+    var winner = player == '1' ? '2':'1'
+    message= `player ${winner} won`
+    setOpen(true)
+    setTimeout(() => 
+    {
+      setlastwinner(winner)
+      setOpen(false)
+      setseconds(0)
+      updatescore(winner == '1'? '1 0' :'0 1')
+      reset()
+      
+    }, 2000);
+  }}> Quit game </button>}
       <div className="grid">
      { 
       [1,2,3,4,5,6,7,8].map((i)=>{
@@ -158,24 +164,50 @@ const change_pos =(newpos)=>{ setpos(newpos) }
              //check if the game has startet yet
               var ii = document.getElementById('p0 2')
 
-             //if (start)
+            // if (start)
               {//if it is your turn
               if (ref[i-1][a] == player)  change_pos(possibilities(ref,`${i-1} ${a}`))
-              else alert('It is not turn yet')
+              else  
+               { 
+                setOpen(true)
+                message = 'It is not turn yet'
+                setTimeout(() => 
+                {
+                  setOpen(false)
+                }, 2000);
+               }
               }
 
-           // else alert ('Start the game first')
-            // console.log(start)
+           /* else  
+            { setOpen(true)
+              message = 'Start the game first'
+              setTimeout(() => {
+                setOpen(false)
+              }, 2000);
+            } */
+            
             }} key={`c${i} ${a}`} className="cell" style={{backgroundColor:pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <Piece id={`p${i-1} ${a}`}  color={ref[i-1][a] =='1' ? 'red':'white'}></Piece>  </div>)
 
             else temp.push(<div onClick={()=>{ 
               if (start)
               {
               if (ref[i-1][a][1] == player)   change_pos(possibilities(ref,`${i-1} ${a}`))
-              else alert('It is not turn yet')
+              else 
+                  { setOpen(true)
+                    message = 'It is not turn yet'
+                    setTimeout(() => {
+                      setOpen(false)
+                    }, 2000);
+                  }
               }
 
-              else alert ('Start the game first')
+           /*   else 
+              { setOpen(true)
+                message = 'Start the game first'
+                setTimeout(() => {
+                  setOpen(false)
+                }, 2000);
+              } */
             }} key={a} className="cell" style={{backgroundColor: pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <King color={ref[i-1][a][1] =='1' ? 'red':'white'}></King>  </div>)
            
            }

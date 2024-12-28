@@ -472,7 +472,7 @@ document.head.appendChild(style);
 var i = document.getElementById(`p${deleted_i} ${deleted_j}`);
 
 // Apply the animation directly to the selected element
-i.style.animation = 'rotateInfinite 3000ms ease-in-out forwards';
+i.style.animation = 'rotateInfinite 900ms ease-in-out forwards';
 i.style.position = 'absolute'; // 
    setTimeout(()=>
     { 
@@ -497,8 +497,8 @@ if (deleted_i!=undefined)
     setTimeout((x)=>{var new_captures = detect_captures(ref,`${destination_i} ${destination_j}`)
 
      if (new_captures.length != 0) resolve( tempref)
-    else setTimeout(()=>{resolve(tempref)},2700)
-  },300)
+    else setTimeout(()=>{resolve(tempref)},800)
+  },150)
   }
  else resolve (  tempref)
 })

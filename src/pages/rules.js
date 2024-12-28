@@ -17,7 +17,7 @@ Capture all of your opponent’s pieces or block them so they cannot make a move
 <p className='bullets'> Setup </p>
 The game is played on an 8x8 board with alternating light and dark squares.
 Each player starts with 12 pieces placed on the dark squares of the first three rows closest to them.
-The player with the darker pieces (usually black) moves first.
+The player with the red pieces moves first.
 </div>
 <br></br>
 <p className='bullets'>Movement</p>
