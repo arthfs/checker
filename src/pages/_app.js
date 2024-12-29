@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
       <MenuListComposition/> 
      
       <Component   {...pageProps}  />  
-        <div className="footer"> © 2024 Thecker Game. Designed and developed by Arthur. All rights reserved.  </div>
+        <div className="footer"> © 2024 Checker Game. Designed and developed by Arthur. All rights reserved.  </div>
     </>
                 }
   </GameContext>);
