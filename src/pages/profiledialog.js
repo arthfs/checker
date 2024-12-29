@@ -35,7 +35,7 @@ const {handleclick,selectedimage,formdata,updateform} = userefcontext()
 
   return (
     <Dialog className='dialog' onClose={handleClose} open={open}>
-      <div style={{marginTop:'10px', justifyContent:'center',display:'flex'}}> <Image  className='avatar' width={50} height={50} src={ selectedimage || '/emptyprofile.jpg'} alt='profile'></Image> </div>
+      <div style={{marginTop:'10px', justifyContent:'center',display:'flex'}}> <Image  className='settingsavatar' width={50} height={50} src={ selectedimage || '/emptyprofile.jpg'} alt='profile'></Image> </div>
       <div style={{justifyContent:'center',display:'flex'}}   > <Button onClick={()=>{handleclick()}}> Change photo </Button> </div>
       <DialogTitle className='dialogtitle'>Profile Informations</DialogTitle>
       <form onSubmit={(event)=>{

@@ -4,8 +4,6 @@
 
 .main{
 
-
-
  height: 100%;
  display: flex;
  justify-content: center;
@@ -34,8 +32,8 @@ body
   border: 2px;
   border-color: red;
   border-style: solid;
-
 }
+
 .score
 {
 font-size: 35px;
@@ -47,29 +45,33 @@ font-size: 35px;
   flex-direction: row;
 }
 
-.test
+.piece
 {
 
   height: 70px;
   display: flex;
   width: 70px;
-  position: absolute;
+  position: relative;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-.inner{
+.inner
+{
   position: absolute;
   background-color: transparent;
   border-Width:4.5px;
- 
+
 }
 
-.star{
+
+
+.star
+{
   position: absolute;
   font-size: 50px;
   padding-top: 10px;
-
 
 }
 
@@ -96,6 +98,19 @@ font-size: 35px;
   margin-right:5px;
 }
 
+.avatar:hover{
+ 
+  scale: 2.3;
+}
+
+.settingsavatar:hover {
+
+  scale:3.3;
+  padding-top:25px;
+  padding-bottom: 25px;
+}
+
+
 .winner{
   position: absolute;
   align-items: center;
@@ -112,13 +127,12 @@ font-size: 35px;
 }
 
 
-
-
 .main2{
   width: 100%;
   justify-content: center;
   display: flex;
 }
+
 .container2 {
   width: 60%; /* Ensures it spans the full viewport width */
  display: flex;
@@ -179,28 +193,12 @@ font-size: 35px;
 
 
 
-.er {
-
-  
-  font-size: 60px;
-  
-}
-
-
-.avatar:hover{
- 
-  scale: 2.3;
-}
-
 .label{
   margin:10px;
 }
 
 .dialogtitle{
-
-  
   display: flex;
-
   justify-content: center;
 
 }
@@ -212,6 +210,12 @@ font-size: 35px;
   width:400px;
 
 }
+
 .input{
  margin: 5px; 
+}
+
+.menu
+{
+  z-index: 1;
 }

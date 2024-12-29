@@ -55,7 +55,7 @@ export default function MenuListComposition() {
   return (
     <Stack direction="row" spacing={2}>
      
-      <div>
+      <div >
         <Button
          style={{color:'red',scale:1.4}}
           ref={anchorRef}
@@ -69,7 +69,7 @@ export default function MenuListComposition() {
          <MenuIcon> </MenuIcon>
         </Button>
 
-        <Popper
+        <Popper className='menu'
           open={open}
           anchorEl={anchorRef.current}
           role={undefined}
@@ -78,14 +78,14 @@ export default function MenuListComposition() {
           disablePortal
         >
           {({ TransitionProps, placement }) => (
-            <Grow
+            <Grow 
               {...TransitionProps}
               style={{
                 transformOrigin:
                   placement === 'bottom-start' ? 'left top' : 'left bottom',
               }}
             >
-              <Paper>
+              <Paper >
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
                     autoFocusItem={open}
@@ -93,10 +93,10 @@ export default function MenuListComposition() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}> <Link href='/'> Home </Link> </MenuItem>
-                    <MenuItem > 
+                    <Link href='/'>  <MenuItem onClick={handleClose}> Home </MenuItem>  </Link> 
                     
-                    <SimpleDialogDemo close={ ()=>handleClose(event)} ></SimpleDialogDemo> 
+                    <MenuItem > 
+                      <SimpleDialogDemo close={ ()=>handleClose(event)} >   </SimpleDialogDemo> 
                     </MenuItem>
                     
                     <MenuItem onClick={ (event)=> { 
@@ -107,7 +107,7 @@ export default function MenuListComposition() {
                 <MenuItem>  <FormControlLabel control={<Switch checked={movesound} onChange={()=>{setmovesound((oldvalue)=>!oldvalue)}} />} label="Moves sound" /> </MenuItem>
                 <MenuItem>   <FormControlLabel control={<Switch checked={capturesound} onChange={()=>{setcapturesound((oldvalue)=>!oldvalue)}} />} label="Captures sound" />  </MenuItem>
                 <MenuItem>   <FormControlLabel control={<Switch checked={backgroundsound} onChange={()=>{setbackgroundsound((oldvalue)=>!oldvalue)}} />} label="Background sound" />  </MenuItem>
-                    <MenuItem onClick={handleClose}> <Link href='/rules'> Instructions </Link></MenuItem>
+                     <Link href='/rules'> <MenuItem   onClick={handleClose}>  Instructions</MenuItem> </Link>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
