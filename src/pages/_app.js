@@ -26,14 +26,15 @@ function Backgroundaudio  (){
 export default function App({ Component, pageProps }) {
 
   return (
-  <GameContext> {
-    <>
-      <MenuListComposition/> 
-     
-      <Component   {...pageProps}  />  
-        <div className="footer"> © 2024 Checker Game. Designed and developed by Arthur. All rights reserved.  </div>
-    </>
-                }
+  <GameContext> 
+    {
+      <>
+        <MenuListComposition/> 
+        <Component   {...pageProps}  />  
+          <div className="footer"> © 2024 Checker Game. Designed and developed by Arthur. All rights reserved.  </div>
+      </>
+    }
+    <Backgroundaudio/>
   </GameContext>);
 }
-// <Backgroundaudio/>
+// 

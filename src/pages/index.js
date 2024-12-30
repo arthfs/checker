@@ -130,7 +130,7 @@ const change_pos =(newpos)=>{ setpos(newpos) }
    { !start && <button className={merienda.className} onClick={()=>{//change_pos(possibilities(ref,'1 3'))
      
    setstart(true)
-   setseconds(10)
+   setseconds(90)
       
     }}>Start game</button>
   }
@@ -164,7 +164,7 @@ const change_pos =(newpos)=>{ setpos(newpos) }
              //check if the game has startet yet
               var ii = document.getElementById('p0 2')
 
-            // if (start)
+           if (start)
               {//if it is your turn
               if (ref[i-1][a] == player)  change_pos(possibilities(ref,`${i-1} ${a}`))
               else  
@@ -178,13 +178,13 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                }
               }
 
-           /* else  
+            else  
             { setOpen(true)
               message = 'Start the game first'
               setTimeout(() => {
                 setOpen(false)
               }, 2000);
-            } */
+            } 
             
             }} key={`c${i} ${a}`} className="cell" style={{backgroundColor:pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <Piece id={`p${i-1} ${a}`}  color={ref[i-1][a] =='1' ? 'red':'white'}></Piece>  </div>)
 
@@ -201,13 +201,13 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                   }
               }
 
-           /*   else 
+              else 
               { setOpen(true)
                 message = 'Start the game first'
                 setTimeout(() => {
                   setOpen(false)
                 }, 2000);
-              } */
+              } 
             }} key={a} className="cell" style={{backgroundColor: pos[1].includes (`${i-1} ${a}`) ? 'yellow': back_color}}> <King color={ref[i-1][a][1] =='1' ? 'red':'white'}></King>  </div>)
            
            }
@@ -275,17 +275,7 @@ const change_pos =(newpos)=>{ setpos(newpos) }
                         }, 2000);
                        
                       }
-                       /*
-                      else if (result== '1 1') 
-                        { 
-                         message = 'draw'
-                         setOpen(true)
-                          setTimeout(() => 
-                            {
-                             setOpen(false)
-                             reset()
-                            }, 2000);
-                        }*/
+                    
                       
                       else 
                       { 
