@@ -1,12 +1,12 @@
 'use client'
 import Piece from "./piece";
 import King from "./king";
-import { detect_captures, move, possibilities, remaining_pieces, reset } from "./functions";
+import { detect_captures, move, possibilities, remaining_pieces, reset } from "../utils/functions";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { Merienda } from 'next/font/google'
-import { userefcontext } from "./context";
+import { userefcontext } from "../components/context";
 import SimpleDialogDemo from "./dialog";
 
 const merienda = Merienda({subsets:['latin']})

@@ -1,6 +1,6 @@
-import "@/styles/globals.css";
+import "../styles/global.css";
 import MenuListComposition from "./menu";
-import { GameContext, userefcontext } from "./context";
+import { GameContext, userefcontext } from "../components/context";
 import { useEffect } from "react";
 
 function Backgroundaudio  (){

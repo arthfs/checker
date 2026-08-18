@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import Image from 'next/image';
 import { useFormState } from 'react-dom';
-import { userefcontext } from './context';
+import { userefcontext } from '../components/context';
 
 function SimpleDialog(props) {
   const { onClose, selectedValue, open } = props;
